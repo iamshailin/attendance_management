@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+//import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,55 +25,55 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPage extends State<FirstPage> {
-  final databaseReference = FirebaseDatabase.instance.reference();
+  //final databaseReference = FirebaseDatabase.instance.reference();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Attendance management"),
-        ),
-        body: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  elevation: 10,
-                  color: Colors.blue,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  ),
-                  onPressed: () {
-                    getData();
-                    setState(() {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SecondPage()));
-                    });
-                  },
-                  child: Text("Mark attendance"),
+      appBar: AppBar(
+        title: Text("Attendance management"),
+      ),
+      body: Center(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                elevation: 10,
+                color: Colors.blue,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
                 ),
-                RaisedButton(
-                  child: Text("Show Attendance"),
-                  elevation: 10,
-                  color: Colors.blue,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  ),
-                )
-              ],
-            ),
+                onPressed: () {
+                  //getData();
+                  setState(() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SecondPage()));
+                  });
+                },
+                child: Text("Mark attendance"),
+              ),
+              RaisedButton(
+                child: Text("Show Attendance"),
+                elevation: 10,
+                color: Colors.blue,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
+              )
+            ],
           ),
         ),
+      ),
     );
   }
 
-  void getData() {
+  /*void getData() {
     databaseReference.once().then((DataSnapshot snapshot) {
       print('Data : ${snapshot.value}');
     });
-  }
+  }*/
 }
 
 class SecondPage extends StatefulWidget {
@@ -145,6 +146,13 @@ class _SecondPage extends State<SecondPage> {
               }).toList(),
             ),
             RaisedButton(
+              onPressed: () {
+                setState(() {
+                  print(dropdownValue1);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ThirdPage(dropdownValue1,dropdownValue2)),);
+                });
+              },
               elevation: 10,
               color: Colors.blue,
               shape: new RoundedRectangleBorder(
@@ -154,6 +162,35 @@ class _SecondPage extends State<SecondPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  final String dropdownValue1;
+  final String dropdownValue2;
+
+  ThirdPage(this.dropdownValue1,this.dropdownValue2);
+
+  @override
+  Widget build(BuildContext context) {
+    print(dropdownValue1);
+    print(dropdownValue2);
+    return Scaffold(
+      body: StreamBuilder(
+        stream: Firestore.instance.collection('Students').document(dropdownValue1).collection(dropdownValue2).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Text("Loading Data....");
+          return Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: <Widget>[
+                Text(snapshot.data.documents[0]['Name'])
+              ],
+            ),
+          );
+        },
       ),
     );
   }

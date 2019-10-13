@@ -128,10 +128,6 @@
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
     },
     {
-        "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_template_icon_group.xml.flat",
-        "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\5271c69f876eb3be88d90d4525b72cc9\\res\\layout\\notification_template_icon_group.xml"
-    },
-    {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\color_common_google_signin_btn_tint.xml.flat",
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\color\\common_google_signin_btn_tint.xml"
     },
@@ -170,10 +166,6 @@
     {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_dark.xml.flat",
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\drawable\\common_google_signin_btn_text_dark.xml"
-    },
-    {
-        "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_action.xml.flat",
-        "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\5271c69f876eb3be88d90d4525b72cc9\\res\\layout\\notification_action.xml"
     },
     {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light_normal.xml.flat",
@@ -248,10 +240,6 @@
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_icon_light_normal_background.9.png"
     },
     {
-        "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\layout-v16_notification_template_custom_big.xml.flat",
-        "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\5271c69f876eb3be88d90d4525b72cc9\\res\\layout-v16\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light.xml.flat",
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
@@ -302,10 +290,6 @@
     {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
         "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\0dce8307b931a91af5edffa256130298\\res\\drawable-mdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
-    },
-    {
-        "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\layout_notification_action_tombstone.xml.flat",
-        "source": "C:\\Users\\SHAILIN\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\5271c69f876eb3be88d90d4525b72cc9\\res\\layout\\notification_action_tombstone.xml"
     },
     {
         "merged": "C:\\Users\\SHAILIN\\AndroidStudioProjects\\attendance_management\\build\\app\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_googleg_disabled_color_18.png.flat",
