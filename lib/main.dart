@@ -388,9 +388,21 @@ class _ThirdPage extends State<ThirdPage> {
   final String dropdownValue3;
   var Alist = new List();
   bool _val1 = false;
+  bool _isCheckes = false;
   var myMap = new Map();
   Map<String, bool> ated = Map();
   _ThirdPage(this.dropdownValue1, this.dropdownValue2, this.dropdownValue3);
+  List<bool> inputs=new List<bool>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      for(int j=0;j<60;j++){
+        inputs.add(true);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //print(dropdownValue1);
@@ -427,7 +439,7 @@ class _ThirdPage extends State<ThirdPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 new CheckboxListTile(
-                                  value: _val1,
+                                  value: inputs[i],
                                   title: Text("UID: " +
                                       snapshot.data.documents[i].documentID),
                                   controlAffinity:
@@ -436,7 +448,9 @@ class _ThirdPage extends State<ThirdPage> {
                                       snapshot.data.documents[i]['Name']),
                                   onChanged: (bool val) {
                                     setState(() {
-                                      if (_val1 != true) {
+                                      inputs[i]=val;
+                                      print('inputs'+inputs[i].toString()+i.toString());
+                                      if (inputs[i] == true) {
                                         /*
                                       Alist.add(snapshot.data.documents[i].documentID);
                                       myMap[snapshot.data.documents[i].documentID.toString()]=true;*/
@@ -492,6 +506,9 @@ class _ThirdPage extends State<ThirdPage> {
                     });
                   }
                   ated.clear();
+                  for(int j=0;j<60;j++){
+                    inputs[j]=false;
+                  }
                 });
               })
         ],
