@@ -47,7 +47,14 @@
         <entry key="firebase_core">
           <value>
             <list>
-              <option value="C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0+9/lib" />
+              <option value="C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="firebase_core_platform_interface">
+          <value>
+            <list>
+              <option value="C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-1.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -97,6 +104,13 @@
           <value>
             <list>
               <option value="C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.5/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="quiver_hashcode">
+          <value>
+            <list>
+              <option value="C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/quiver_hashcode-2.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -172,12 +186,14 @@
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.11.0+2/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.2/lib" />
-      <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0+9/lib" />
+      <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.2/lib" />
+      <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-1.0.0/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.5/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.1.7/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.4/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.8.0+1/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.5/lib" />
+      <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/quiver_hashcode-2.0.0/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.5.5/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib" />
       <root url="file://C:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.0.0/lib" />
