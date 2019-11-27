@@ -69,6 +69,22 @@ class _FirstPage extends State<FirstPage> {
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0),
                 ),
+              ),
+              RaisedButton(
+                child: Text("Show Defaulters"),
+                onPressed: () {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShowDefaulters()));
+                  });
+                },
+                elevation: 10,
+                color: Colors.blue,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
               )
             ],
           ),
@@ -81,6 +97,188 @@ class _FirstPage extends State<FirstPage> {
       print('Data : ${snapshot.value}');
     });
   }*/
+}
+
+class ShowDefaulters extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _ShowDefaulters();
+  }
+}
+
+class _ShowDefaulters extends State<ShowDefaulters> {
+  String dropdownValue1 = "FYMCA";
+  String dropdownValue2 = "SEM 1";
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second page"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            DropdownButton<String>(
+              value: dropdownValue1,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.blue),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue1 = newValue;
+                });
+              },
+              items: <String>['FYMCA', 'SYMCA', 'TYMCA']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            DropdownButton<String>(
+              value: dropdownValue2,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.blue),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue2 = newValue;
+                });
+              },
+              items: <String>['SEM 1', 'SEM 2']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            RaisedButton(
+              onPressed: () {
+                setState(() {
+                  print(dropdownValue1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Defaulter(dropdownValue1, dropdownValue2)),
+                  );
+                });
+              },
+              elevation: 10,
+              color: Colors.blue,
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              child: Text("Get details"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Defaulter extends StatefulWidget {
+  final String dropdownValue1;
+  final String dropdownValue2;
+  Defaulter(this.dropdownValue1, this.dropdownValue2);
+  @override
+  State<StatefulWidget> createState() {
+    return _Defaulter(dropdownValue1, dropdownValue2);
+  }
+}
+
+class _Defaulter extends State<Defaulter> {
+  final String dropdownValue1;
+  final String dropdownValue2;
+  _Defaulter(this.dropdownValue1, this.dropdownValue2);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Students"),
+      ),
+      body: Column(
+        children: <Widget>[
+          StreamBuilder(
+            stream: Firestore.instance
+                .collection('Students')
+                .document(dropdownValue1)
+                .collection(dropdownValue2)
+                /* .where(dropdownValue3, isEqualTo: true)*/
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Text("Loading Data....");
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  new ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, int i) {
+                      print(snapshot.data.documents[i]);
+                      //print(snapshot.data.documents[i].documentID);
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Card(
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("UID: " +
+                                      snapshot.data.documents[i].documentID),
+                                  Text("Name: " +
+                                      snapshot.data.documents[i]['Name']),
+                                  _def(snapshot, i)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Widget _def(AsyncSnapshot snapshot, int i) {
+  double per=snapshot.data.documents[i]['DBMS'] /
+      snapshot.data.documents[i]['DBMSTotal']*100;
+  if (per < 75) {
+    return Text(
+      "DBMS: " + per.toString()+"%",
+      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+    );
+  } else {
+    return Text("DBMS: " + per.toString()+"%");
+  }
 }
 
 class Show extends StatefulWidget {
@@ -229,11 +427,13 @@ class _Attend extends State<Attend> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text( "UID: " +
+                                  Text("UID: " +
                                       snapshot.data.documents[i].documentID),
                                   Text("Name: " +
                                       snapshot.data.documents[i]['Name']),
-                                  Text("DBMS: " + snapshot.data.documents[i]['DBMS'].toString())
+                                  Text("DBMS: " +
+                                      snapshot.data.documents[i]['DBMS']
+                                          .toString())
                                 ],
                               ),
                             ),
@@ -392,13 +592,15 @@ class _ThirdPage extends State<ThirdPage> {
   var myMap = new Map();
   Map<String, bool> ated = Map();
   _ThirdPage(this.dropdownValue1, this.dropdownValue2, this.dropdownValue3);
-  List<bool> inputs=new List<bool>();
+  List<bool> inputs = new List<bool>();
+  List<String> IDs = new List<String>();
+
   @override
   void initState() {
     // TODO: implement initState
     setState(() {
-      for(int j=0;j<60;j++){
-        inputs.add(true);
+      for (int j = 0; j < 60; j++) {
+        inputs.add(false);
       }
     });
   }
@@ -422,6 +624,13 @@ class _ThirdPage extends State<ThirdPage> {
                 /* .where(dropdownValue3, isEqualTo: true)*/
                 .snapshots(),
             builder: (context, snapshot) {
+              //print(snapshot.data.documents.length);
+              var temp = snapshot.data.documents.length;
+              for (int i = 0; i < temp; i++) {
+                if (!IDs.contains(snapshot.data.documents[i].documentID))
+                  IDs.add(snapshot.data.documents[i].documentID);
+              }
+              //print(IDs);
               if (!snapshot.hasData) return Text("Loading Data....");
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -448,8 +657,10 @@ class _ThirdPage extends State<ThirdPage> {
                                       snapshot.data.documents[i]['Name']),
                                   onChanged: (bool val) {
                                     setState(() {
-                                      inputs[i]=val;
-                                      print('inputs'+inputs[i].toString()+i.toString());
+                                      inputs[i] = val;
+                                      print('inputs' +
+                                          inputs[i].toString() +
+                                          i.toString());
                                       if (inputs[i] == true) {
                                         /*
                                       Alist.add(snapshot.data.documents[i].documentID);
@@ -505,9 +716,31 @@ class _ThirdPage extends State<ThirdPage> {
                       }
                     });
                   }
+                  for (var i in IDs) {
+                    DocumentReference ref = Firestore.instance
+                        .collection('Students')
+                        .document(dropdownValue1)
+                        .collection(dropdownValue2)
+                        .document(i);
+                    //print(ref.path);
+                    ref.updateData(
+                        {dropdownValue3 + 'Total': FieldValue.increment(1)});
+                    Firestore.instance.runTransaction((Transaction tx) async {
+                      DocumentSnapshot postSnapshot = await tx.get(ref);
+                      print("Hello" + postSnapshot.toString());
+                      print("hrllo");
+                      if (postSnapshot.exists) {
+                        await tx.update(ref, <String, dynamic>{
+                          dropdownValue3 + 'Total':
+                              postSnapshot.data[dropdownValue3 + 'Total'] + 1
+                        });
+                      }
+                    });
+                  }
+                  IDs.clear();
                   ated.clear();
-                  for(int j=0;j<60;j++){
-                    inputs[j]=false;
+                  for (int j = 0; j < 60; j++) {
+                    inputs[j] = false;
                   }
                 });
               })
