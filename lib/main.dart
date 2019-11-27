@@ -85,6 +85,20 @@ class _FirstPage extends State<FirstPage> {
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0),
                 ),
+              ),
+              RaisedButton(
+                child: Text("Add student"),
+                onPressed: () {
+                  setState(() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddStudent()));
+                  });
+                },
+                elevation: 10,
+                color: Colors.blue,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
               )
             ],
           ),
@@ -97,6 +111,169 @@ class _FirstPage extends State<FirstPage> {
       print('Data : ${snapshot.value}');
     });
   }*/
+}
+
+class AddStudent extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _AddStudent();
+  }
+}
+
+class _AddStudent extends State<AddStudent> {
+  String dropdownValue1 = "FYMCA";
+  String dropdownValue2 = "SEM 1";
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Select Year"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            DropdownButton<String>(
+              value: dropdownValue1,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.blue),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue1 = newValue;
+                });
+              },
+              items: <String>['FYMCA', 'SYMCA', 'TYMCA']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            DropdownButton<String>(
+              value: dropdownValue2,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.blue),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue2 = newValue;
+                });
+              },
+              items: <String>['SEM 1', 'SEM 2']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            RaisedButton(
+              onPressed: () {
+                setState(() {
+                  print(dropdownValue1);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Add(dropdownValue1, dropdownValue2)),
+                  );
+                });
+              },
+              elevation: 10,
+              color: Colors.blue,
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              child: Text("Add student"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Add extends StatefulWidget {
+  final String dropdownValue1;
+  final String dropdownValue2;
+  Add(this.dropdownValue1, this.dropdownValue2);
+  @override
+  State<StatefulWidget> createState() {
+    return _Add(dropdownValue1, dropdownValue2);
+  }
+}
+
+class _Add extends State<Add> {
+  final String dropdownValue1;
+  final String dropdownValue2;
+  String Name;
+  String UID;
+  final db = Firestore.instance;
+  _Add(this.dropdownValue1, this.dropdownValue2);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Student Details"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              decoration: InputDecoration(labelText: "Enter Full Name"),
+              onChanged: (text) {
+                Name = text;
+              },
+            ),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: "Enter UID"),
+              onChanged: (text) {
+                UID = text;
+                print(UID);
+              },
+            ),
+            RaisedButton(
+              onPressed: () async {
+                await db
+                    .collection('Students')
+                    .document(dropdownValue1)
+                    .collection(dropdownValue2)
+                    .document(UID)
+                    .setData({"Name": Name});
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FirstPage()));
+              },
+              elevation: 10,
+              color: Colors.blue,
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(30.0),
+              ),
+              child: Text("Add"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class ShowDefaulters extends StatefulWidget {
@@ -115,7 +292,7 @@ class _ShowDefaulters extends State<ShowDefaulters> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second page"),
+        title: Text("Select Year"),
       ),
       body: Center(
         child: Column(
@@ -214,7 +391,7 @@ class _Defaulter extends State<Defaulter> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Students"),
+        title: Text("Defaulters"),
       ),
       body: Column(
         children: <Widget>[
@@ -269,15 +446,16 @@ class _Defaulter extends State<Defaulter> {
 }
 
 Widget _def(AsyncSnapshot snapshot, int i) {
-  double per=snapshot.data.documents[i]['DBMS'] /
-      snapshot.data.documents[i]['DBMSTotal']*100;
+  double per = snapshot.data.documents[i]['DBMS'] /
+      snapshot.data.documents[i]['DBMSTotal'] *
+      100;
   if (per < 75) {
     return Text(
-      "DBMS: " + per.toString()+"%",
+      "DBMS: " + per.toString() + "%",
       style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
     );
   } else {
-    return Text("DBMS: " + per.toString()+"%");
+    return Text("DBMS: " + per.toString() + "%");
   }
 }
 
@@ -297,7 +475,7 @@ class _Show extends State<Show> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second page"),
+        title: Text("Select Year"),
       ),
       body: Center(
         child: Column(
@@ -431,9 +609,16 @@ class _Attend extends State<Attend> {
                                       snapshot.data.documents[i].documentID),
                                   Text("Name: " +
                                       snapshot.data.documents[i]['Name']),
-                                  Text("DBMS: " +
-                                      snapshot.data.documents[i]['DBMS']
-                                          .toString())
+                                  Row(
+                                    children: <Widget>[
+                                      Text("DBMS: " +
+                                          snapshot.data.documents[i]['DBMS']
+                                              .toString()),
+                                      Text("Total: " +
+                                          snapshot.data.documents[i]['DBMSTotal']
+                                              .toString()),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -469,7 +654,7 @@ class _SecondPage extends State<SecondPage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second page"),
+        title: Text("Select Year"),
       ),
       body: Center(
         child: Column(
@@ -625,13 +810,17 @@ class _ThirdPage extends State<ThirdPage> {
                 .snapshots(),
             builder: (context, snapshot) {
               //print(snapshot.data.documents.length);
-              var temp = snapshot.data.documents.length;
-              for (int i = 0; i < temp; i++) {
-                if (!IDs.contains(snapshot.data.documents[i].documentID))
-                  IDs.add(snapshot.data.documents[i].documentID);
-              }
+
               //print(IDs);
-              if (!snapshot.hasData) return Text("Loading Data....");
+              if (!snapshot.hasData)
+                return Text("Loading Data....");
+              else {
+                var temp = snapshot.data.documents.length;
+                for (int i = 0; i < temp; i++) {
+                  if (!IDs.contains(snapshot.data.documents[i].documentID))
+                    IDs.add(snapshot.data.documents[i].documentID);
+                }
+              }
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
